@@ -141,6 +141,30 @@ const Royal_tablet = () => {
         </div>
 
         <div style={{
+            display: 'flex',
+            justifyContent: 'right',
+            height: '50px',
+            width: '100%',
+            margin: '5px',
+            alignItems: 'center'
+            }}>
+            <p style={{
+                fontSize: '20px',
+                fontWeight: 'bold',
+                height: '20px',
+                padding: 'none',
+                margin: '20px 10px'
+            }}>Mensaje: </p>
+            <input style={{
+                width: '100%',
+                height: '20px',
+                marginTop: '10px',
+                padding: 'none'
+            }} type="text" value={message} onChange={(event) => setMessage(event.target.value)} />
+        </div>
+
+
+        <div style={{
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
@@ -169,29 +193,6 @@ const Royal_tablet = () => {
               marginTop: '10px',
               padding: 'none'
             }} type="text" value={clave} onChange={(event) => setClave(event.target.value)} />
-          </div>
-
-          <div style={{
-            display: 'flex',
-            justifyContent: 'right',
-            height: '50px',
-            width: '100%',
-            margin: '5px',
-            alignItems: 'center'
-          }}>
-            <p style={{
-              fontSize: '20px',
-              fontWeight: 'bold',
-              height: '20px',
-              padding: 'none',
-              margin: '20px 10px'
-            }}>Mensaje: </p>
-            <input style={{
-              width: '100%',
-              height: '20px',
-              marginTop: '10px',
-              padding: 'none'
-            }} type="text" value={message} onChange={(event) => setMessage(event.target.value)} />
           </div>
           
           
