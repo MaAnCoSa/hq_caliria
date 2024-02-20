@@ -12,6 +12,7 @@ function App() {
     document.body.classList.remove('active-modal')
   }
 
+  const [tableName, setTableName] = useState<string>("")
   const [tableId, setTableId] = useState<string>("")
   const [tablePassword, setTablePassword] = useState<string>("")
 
@@ -19,12 +20,13 @@ function App() {
     const requestOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ table_id: tableId, table_password: tablePassword})
+      body: JSON.stringify({ table_name: tableName, table_password: tablePassword})
     }
     await fetch('https://backcaliria.vercel.app/rtlogin', requestOptions)
     .then(res => res.json())
     .then(sol => {
         if (sol.auth) {
+          setTableId(sol.table_id)
           setLoginModal(false)
         }
 
@@ -65,7 +67,7 @@ function App() {
               height: '20px',
               marginTop: '10px',
               padding: 'none'
-            }} type="text" value={tableId} onChange={(event) => setTableId(event.target.value)} />
+            }} type="text" value={tableName} onChange={(event) => setTableName(event.target.value)} />
           </div>
 
           <div style={{
