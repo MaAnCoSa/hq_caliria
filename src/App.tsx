@@ -22,7 +22,7 @@ function App() {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ table_id: tableId, table_password: tablePassword})
     }
-    await fetch('http://localhost:5000/rtlogin', requestOptions)
+    await fetch('https://backcaliria.vercel.app/rtlogin', requestOptions)
     .then(res => res.json())
     .then(sol => {
         if (sol.auth) {

@@ -28,7 +28,7 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
     })
 
     const get_RT_sol = async () => {
-        await fetch('http://localhost:5000/rtsol')
+        await fetch('https://backcaliria.vercel.app/rtsol')
         .then(res => res.json())
         .then(sol => {
             setRt1(sol.d1)
@@ -62,7 +62,7 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
     ) => {
         console.log("clave: " + clave)
         console.log("message: " + message)
-        await fetch('http://localhost:5000/rtsol',
+        await fetch('https://backcaliria.vercel.app/rtsol',
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
