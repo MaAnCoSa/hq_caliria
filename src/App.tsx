@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import './App.css'
 import Royal_tablet from './components/Royal_tablet';
-import Modal from './components/Modal';
 import './styles/Modal.css';
 
 function App() {
@@ -43,6 +42,8 @@ function App() {
       <div className="modal">
         <div className="overlay"></div>
         <div className="modal-content">
+          <h2 style={{fontSize: '40px'}}>HQ Caliria</h2>
+
           <h2>Login</h2>
           <div style={{
             display: 'flex',
@@ -89,14 +90,15 @@ function App() {
               padding: 'none'
             }} type="text" value={tablePassword} onChange={(event) => setTablePassword(event.target.value)} />
           </div>
+          <button
+            className='close-modal'
+            onClick={() => login()} >
+            ENTRAR
+          </button>
         </div>
 
 
-        <button
-          className='close-modal'
-          onClick={() => login()} >
-            CERRAR
-          </button>
+        
       </div>
       )}
     </>

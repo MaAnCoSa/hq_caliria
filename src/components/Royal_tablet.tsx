@@ -104,6 +104,29 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
         border: 'solid 2px #181818',
         borderBottom: 'solid 1px #181818'
       }}>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginLeft: '20px',
+          width: '80%'
+        }}>
+          <p style={{
+            fontSize: '20px',
+            fontWeight: 'bold',
+            height: '20px',
+            padding: 'none',
+            margin: '20px 10px'
+          }}>Combinacion: </p>
+          <Select style={{
+            width: '100%',
+            height: '30px',
+            marginTop: '10px',
+            padding: 'none'
+          }} />
+        </div>
+        
+        
         <p style={{
           margin: 'none',
           padding: 'none',
