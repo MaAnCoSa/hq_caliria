@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import Rt_pestillo from './Rt_pestillo';
 import { useEffectOnce } from 'react-use';
+import { Select } from '@mui/base';
 
 
-const Royal_tablet = () => {
+const Royal_tablet = ({ table_id }: { table_id: string }) => {
     
     const [rt1, setRt1] = useState<number>(0)
     const [rt2, setRt2] = useState<number>(0)
@@ -27,24 +28,24 @@ const Royal_tablet = () => {
     })
 
     const get_RT_sol = async () => {
-        await fetch('https://backcaliria.vercel.app/rtsol')
+        await fetch('http://localhost:5000/rtsol')
         .then(res => res.json())
         .then(sol => {
-            setRt1(sol.digit1)
-            setRt2(sol.digit2)
-            setRt3(sol.digit3)
-            setRt4(sol.digit4)
-            setRt5(sol.digit5)
-            setClaveActual(sol.clave)
-            setMessageActual(sol.message)
+            setRt1(sol.d1)
+            setRt2(sol.d2)
+            setRt3(sol.d3)
+            setRt4(sol.d4)
+            setRt5(sol.d5)
+            setClaveActual(sol.code)
+            setMessageActual(sol.msg)
 
-            setD1(sol.digit1)
-            setD2(sol.digit2)
-            setD3(sol.digit3)
-            setD4(sol.digit4)
-            setD5(sol.digit5)
-            setClave(sol.clave)
-            setMessage(sol.message)
+            setD1(sol.d1)
+            setD2(sol.d2)
+            setD3(sol.d3)
+            setD4(sol.d4)
+            setD5(sol.d5)
+            setClave(sol.code)
+            setMessage(sol.msg)
 
         });
         console.log("Se hizo un GET")
@@ -61,19 +62,21 @@ const Royal_tablet = () => {
     ) => {
         console.log("clave: " + clave)
         console.log("message: " + message)
-        await fetch('https://backcaliria.vercel.app/rtsol',
+        await fetch('http://localhost:5000/rtsol',
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
             "sol": {
-                "digit1": d1,
-                "digit2": d2,
-                "digit3": d3,
-                "digit4": d4,
-                "digit5": d5,
-                "clave": clave,
-                "message": message
+                "table_id": table_id,
+                "id_comb": "Combination 1",
+                "d1": d1,
+                "d2": d2,
+                "d3": d3,
+                "d4": d4,
+                "d5": d5,
+                "code": clave,
+                "msg": message
             }
             })
         }
@@ -148,6 +151,28 @@ const Royal_tablet = () => {
           marginLeft: '20px',
           width: '300px'
         }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'right',
+            height: '50px',
+            width: '100%',
+            margin: '5px',
+            alignItems: 'center'
+          }}>
+            <p style={{
+              fontSize: '20px',
+              fontWeight: 'bold',
+              height: '20px',
+              padding: 'none',
+              margin: '20px 10px'
+            }}>Combinacion: </p>
+            <Select style={{
+              width: '100%',
+              height: '30px',
+              marginTop: '10px',
+              padding: 'none'
+            }} />
+          </div>
           <div style={{
             display: 'flex',
             justifyContent: 'right',
