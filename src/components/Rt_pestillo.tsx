@@ -1,4 +1,4 @@
-const Rt_pestillo = ({ num, setter }: { num: number, setter: Function })  => {
+const Rt_pestillo = ({ num, setter }: { num: any, setter: Function })  => {
 
     return (
 

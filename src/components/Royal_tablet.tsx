@@ -1,27 +1,44 @@
 import { useState } from 'react';
 import Rt_pestillo from './Rt_pestillo';
 import { useEffectOnce } from 'react-use';
-import { Select } from '@mui/base';
 
 
 const Royal_tablet = ({ table_id }: { table_id: string }) => {
-    
-    const [rt1, setRt1] = useState<number>(0)
-    const [rt2, setRt2] = useState<number>(0)
-    const [rt3, setRt3] = useState<number>(0)
-    const [rt4, setRt4] = useState<number>(0)
-    const [rt5, setRt5] = useState<number>(0)
-    const [claveActual, setClaveActual] = useState<string>("")
-    const [messageActual, setMessageActual] = useState<string>("")
+    type comb = {
+      comb_id: string,
+      d1: number,
+      d2: number,
+      d3: number,
+      d4: number,
+      d5: number,
+      code: string,
+      msg: string
+    }
 
+    const emptyComb = {
+      comb_id: "",
+      d1: 0,
+      d2: 0,
+      d3: 0,
+      d4: 0,
+      d5: 0,
+      code: "",
+      msg: ""
+    }  
 
-    const [d1, setD1] = useState<number>(0)
-    const [d2, setD2] = useState<number>(0)
-    const [d3, setD3] = useState<number>(0)
-    const [d4, setD4] = useState<number>(0)
-    const [d5, setD5] = useState<number>(0)
-    const [clave, setClave] = useState<string>("")
-    const [message, setMessage] = useState<string>("")
+    const [combList, setCombList] = useState<Map<string, comb>>(new Map())
+    const [combOptions, setCombOptions] = useState([])
+    const [selectedComb, setSelectedComb] = useState<string>("")
+    const [selected, setSelected] = useState<boolean>(false)
+    const [actualComb, setActualComb] = useState<any>(emptyComb)
+
+    const [d1, setD1] = useState<number | undefined>(0)
+    const [d2, setD2] = useState<number | undefined>(0)
+    const [d3, setD3] = useState<number | undefined>(0)
+    const [d4, setD4] = useState<number | undefined>(0)
+    const [d5, setD5] = useState<number | undefined>(0)
+    const [clave, setClave] = useState<string | undefined>("")
+    const [message, setMessage] = useState<string | undefined>("")
 
     useEffectOnce(() => {
         get_RT_sol()
@@ -30,38 +47,35 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
     const get_RT_sol = async () => {
         await fetch(`https://backcaliria.vercel.app/rtsol/${table_id}`)
         .then(res => res.json())
-        .then(sol => {
-            setRt1(sol.d1)
-            setRt2(sol.d2)
-            setRt3(sol.d3)
-            setRt4(sol.d4)
-            setRt5(sol.d5)
-            setClaveActual(sol.code)
-            setMessageActual(sol.msg)
+        .then(async (sol) => {
+            const newCombList: Map<string, comb> = new Map()
+            const newCombOptions: any = []
+            sol.forEach((combRaw: string) => {
+              const newComb = JSON.parse(combRaw)
+              newCombList.set(newComb.comb_id, newComb)
+              newCombOptions.push(newComb.comb_id)
 
-            setD1(sol.d1)
-            setD2(sol.d2)
-            setD3(sol.d3)
-            setD4(sol.d4)
-            setD5(sol.d5)
-            setClave(sol.code)
-            setMessage(sol.msg)
+            })
+
+            setCombList(newCombList)
+            setCombOptions(newCombOptions)   
 
         });
-        console.log("Se hizo un GET")
+
+        setSelectedComb("")
+
+        setActualComb(combList.get(selectedComb))
     }
 
     const post_RT_sol = async (
-        d1: number,
-        d2: number,
-        d3: number,
-        d4: number,
-        d5: number,
-        clave: string,
-        message: string
+        d1: any,
+        d2: any,
+        d3: any,
+        d4: any,
+        d5: any,
+        clave: any,
+        message: any
     ) => {
-        console.log("clave: " + clave)
-        console.log("message: " + message)
         await fetch('https://backcaliria.vercel.app/rtsol',
         {
             method: 'POST',
@@ -69,7 +83,7 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
             body: JSON.stringify({
             "sol": {
                 "table_id": table_id,
-                "id_comb": "Combination 1",
+                "comb_id": selectedComb,
                 "d1": d1,
                 "d2": d2,
                 "d3": d3,
@@ -81,7 +95,23 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
             })
         }
         )
+        setSelected(false)
         get_RT_sol()
+    }
+
+    const selectComb = (combName: string) => {
+      setSelected(true)
+      setSelectedComb(combName)
+      const newComb: comb | undefined = combList.get(combName)
+      setActualComb(newComb)
+      
+      setD1(newComb?.d1)
+      setD2(newComb?.d2)
+      setD3(newComb?.d3)
+      setD4(newComb?.d4)
+      setD5(newComb?.d5)
+      setClave(newComb?.code)
+      setMessage(newComb?.msg)
     }
 
     return (
@@ -97,12 +127,17 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
         marginBottom: '-5px',
         padding: 'none',
         height: '60px',
+        width: '525px',
         borderRadius: '10px 10px 0 0'
       }}>Royal Tablet</h1>
 
       <div style={{
         border: 'solid 2px #181818',
-        borderBottom: 'solid 1px #181818'
+        borderBottom: 'solid 1px #181818',
+        height: '240px',
+        width: '521px',
+        borderBottomLeftRadius: (selected ? "none" : "0 0 10px 10px"),
+        borderBottomRightRadius: (selected ? "none" : "0 0 10px 10px")
       }}>
         <div style={{
           display: 'flex',
@@ -118,34 +153,59 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
             padding: 'none',
             margin: '20px 10px'
           }}>Combinacion: </p>
-          <Select style={{
+          <select style={{
             width: '100%',
             height: '30px',
             marginTop: '10px',
-            padding: 'none'
-          }} />
+            padding: 'none',
+            color: 'white'
+          }}
+          value={selectedComb}
+          onChange={(e: any) => selectComb(e.target.value)}
+          >
+            <option value={""} disabled>Selecciona una Combinación</option>
+            {
+              combOptions.map((comb, key) => {
+                return (
+                  <option key={key} value={comb}>{comb}</option>
+                )
+              })
+            }
+          </select>
+          
         </div>
         
-        
+        {!selected ? (
+          <>
+            <h1 style={{
+              fontSize: '25px',
+              marginTop: '70px'
+            }}>Seleccione una Combinación</h1>
+          </>
+          ) : (
+          <>
         <p style={{
           margin: 'none',
           padding: 'none',
           fontSize: 20,
           fontWeight: 'bold'
-        }}>Combinación Actual: {rt1}{rt2}{rt3}{rt4}{rt5}</p>
+        }}>Combinación Actual: {actualComb?.d1}{actualComb?.d2}{actualComb?.d3}{actualComb?.d4}{actualComb?.d5}</p>
 
         <h3 style={{
           fontSize: 20
         }}>
-          Mensaje: {messageActual}
+          Mensaje: {actualComb?.msg}
         </h3>
         <h3 style={{
           fontSize: 20
         }}>
-          Clave: {claveActual}
+          Clave: {actualComb?.code}
         </h3>
+        </>
+        )}
       </div>
 
+        {!selected ? (<></>) : (
       <div style={{
         display: 'flex',
         alignItems: 'center',
@@ -153,7 +213,7 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
         borderTop: 'solid 1px #181818',
         borderRadius: '0 0 10px 10px',
         paddingBottom: '20px',
-        width: '520px'
+        width: '521px'
       }}>
         <div style={{
           margin: 'none',
@@ -174,28 +234,7 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
           marginLeft: '20px',
           width: '300px'
         }}>
-          <div style={{
-            display: 'flex',
-            justifyContent: 'right',
-            height: '50px',
-            width: '100%',
-            margin: '5px',
-            alignItems: 'center'
-          }}>
-            <p style={{
-              fontSize: '20px',
-              fontWeight: 'bold',
-              height: '20px',
-              padding: 'none',
-              margin: '20px 10px'
-            }}>Combinacion: </p>
-            <Select style={{
-              width: '100%',
-              height: '30px',
-              marginTop: '10px',
-              padding: 'none'
-            }} />
-          </div>
+
           <div style={{
             display: 'flex',
             justifyContent: 'right',
@@ -250,7 +289,9 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
             APLICAR
           </button>
         </div>
+        
       </div>
+      )}
       
 
     </>
