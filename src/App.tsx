@@ -40,9 +40,14 @@ function App() {
       justifyContent: 'center',
       alignItems: 'center'
     }}>
-      <h1>HQ Caliria - {tableName}</h1>
       
-      {!loginModal && <Royal_tablet table_id={tableId}/> }
+      
+      {!loginModal && (
+      <>
+        <h1>HQ Caliria - {tableName}</h1>
+        <Royal_tablet table_id={tableId}/>
+      </>
+      )}
 
       {loginModal && (
       <div className="modal">
