@@ -134,6 +134,16 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
       setActive(newComb?.active)
     }
 
+    const switchStyle = {
+      borderRadius: 2,
+      "& .MuiSwitch-switchBase.Mui-checked": {
+        color: "green"
+      },
+      "& .MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track": {
+        backgroundColor: 'lightgreen'
+      }
+    }
+
     return (
         <>
 
@@ -179,7 +189,7 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
             marginTop: '10px',
             padding: 'none',
             color: 'white',
-            backgroundColor: '#000814',
+            backgroundColor: '#3d3d3d',
             borderRadius: '3px'
           }}
           value={selectedComb}
@@ -281,7 +291,7 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
             </p>
             <Switch checked={active} onChange={(event: any) => {
                 setActive(event.target.checked)
-              }} color="warning" />
+              }} color="warning" sx={switchStyle} />
           </div>
 
           <div style={{
@@ -305,7 +315,7 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
               height: '20px',
               marginTop: '10px',
               padding: 'none',
-              backgroundColor: '#000814',
+              backgroundColor: '#3d3d3d',
               color: 'rgba(255, 255, 255, 0.87)',
               borderRadius: '3px'
             }} type="text" value={message} onChange={(event) => setMessage(event.target.value)} />
@@ -331,7 +341,7 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
               height: '20px',
               marginTop: '10px',
               padding: 'none',
-              backgroundColor: '#000814',
+              backgroundColor: '#3d3d3d',
               color: 'rgba(255, 255, 255, 0.87)',
               borderRadius: '3px'
             }} type="text" value={clave} onChange={(event) => setClave(event.target.value)} />

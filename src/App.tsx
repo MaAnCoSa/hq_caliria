@@ -76,7 +76,7 @@ function App() {
               height: '20px',
               marginTop: '10px',
               padding: 'none',
-              backgroundColor: '#000814',
+              backgroundColor: '#3d3d3d',
               color: 'rgba(255, 255, 255, 0.87)',
               borderRadius: '3px'
             }} type="text" value={tableName} onChange={(event) => setTableName(event.target.value)} />
@@ -102,7 +102,7 @@ function App() {
               height: '20px',
               marginTop: '10px',
               padding: 'none',
-              backgroundColor: '#000814',
+              backgroundColor: '#3d3d3d',
               color: 'rgba(255, 255, 255, 0.87)',
               borderRadius: '3px'
             }} type="password" value={tablePassword} onChange={(event) => setTablePassword(event.target.value)} />
