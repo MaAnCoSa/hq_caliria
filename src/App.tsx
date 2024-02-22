@@ -75,7 +75,10 @@ function App() {
               width: '100%',
               height: '20px',
               marginTop: '10px',
-              padding: 'none'
+              padding: 'none',
+              backgroundColor: '#000814',
+              color: 'rgba(255, 255, 255, 0.87)',
+              borderRadius: '3px'
             }} type="text" value={tableName} onChange={(event) => setTableName(event.target.value)} />
           </div>
 
@@ -98,7 +101,10 @@ function App() {
               width: '100%',
               height: '20px',
               marginTop: '10px',
-              padding: 'none'
+              padding: 'none',
+              backgroundColor: '#000814',
+              color: 'rgba(255, 255, 255, 0.87)',
+              borderRadius: '3px'
             }} type="password" value={tablePassword} onChange={(event) => setTablePassword(event.target.value)} />
           </div>
           <button

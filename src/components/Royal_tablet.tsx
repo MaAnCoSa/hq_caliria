@@ -2,11 +2,12 @@ import { useState } from 'react';
 import Rt_pestillo from './Rt_pestillo';
 import { useEffectOnce } from 'react-use';
 import toast, { Toaster } from 'react-hot-toast';
-
+import { FormControlLabel, Switch } from '@mui/material';
 
 const Royal_tablet = ({ table_id }: { table_id: string }) => {
     type comb = {
       comb_id: string,
+      active: boolean,
       d1: number,
       d2: number,
       d3: number,
@@ -18,6 +19,7 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
 
     const emptyComb = {
       comb_id: "",
+      active: false,
       d1: 0,
       d2: 0,
       d3: 0,
@@ -40,6 +42,10 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
     const [d5, setD5] = useState<number | undefined>(0)
     const [clave, setClave] = useState<string | undefined>("")
     const [message, setMessage] = useState<string | undefined>("")
+    const [active, setActive] = useState<boolean | undefined>(false)
+
+    console.log(active)
+
 
     useEffectOnce(() => {
         get_RT_sol()
@@ -69,6 +75,7 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
     }
 
     const post_RT_sol = async (
+        active: any,
         d1: any,
         d2: any,
         d3: any,
@@ -86,6 +93,7 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
             "sol": {
                 "table_id": table_id,
                 "comb_id": selectedComb,
+                "active": active,
                 "d1": d1,
                 "d2": d2,
                 "d3": d3,
@@ -123,6 +131,7 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
       setD5(newComb?.d5)
       setClave(newComb?.code)
       setMessage(newComb?.msg)
+      setActive(newComb?.active)
     }
 
     return (
@@ -169,7 +178,9 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
             height: '30px',
             marginTop: '10px',
             padding: 'none',
-            color: 'white'
+            color: 'white',
+            backgroundColor: '#000814',
+            borderRadius: '3px'
           }}
           value={selectedComb}
           onChange={(e: any) => selectComb(e.target.value)}
@@ -248,12 +259,41 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
 
           <div style={{
             display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '150px',
+            marginTop: '20px',
+            marginBottom: '20px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            //paddingTop: '-10px',
+            paddingBottom: '10px',
+            backgroundColor: '#343434',
+            borderRadius: '20px'
+          }}>
+            <p style={{
+              paddingTop: 'none',
+              marginBottom: '0px',
+              fontSize: '20px',
+              fontWeight: 'bold'
+            }}>
+              {active ? "Activada" : "Desactivada"}
+            </p>
+            <Switch checked={active} onChange={(event: any) => {
+                setActive(event.target.checked)
+              }} color="warning" />
+          </div>
+
+          <div style={{
+            display: 'flex',
             justifyContent: 'right',
             height: '50px',
             width: '100%',
             margin: '5px',
             alignItems: 'center'
           }}>
+
             <p style={{
               fontSize: '20px',
               fontWeight: 'bold',
@@ -265,7 +305,10 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
               width: '100%',
               height: '20px',
               marginTop: '10px',
-              padding: 'none'
+              padding: 'none',
+              backgroundColor: '#000814',
+              color: 'rgba(255, 255, 255, 0.87)',
+              borderRadius: '3px'
             }} type="text" value={message} onChange={(event) => setMessage(event.target.value)} />
           </div>
 
@@ -288,15 +331,19 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
               width: '100%',
               height: '20px',
               marginTop: '10px',
-              padding: 'none'
+              padding: 'none',
+              backgroundColor: '#000814',
+              color: 'rgba(255, 255, 255, 0.87)',
+              borderRadius: '3px'
             }} type="text" value={clave} onChange={(event) => setClave(event.target.value)} />
           </div>
           
           
           <button style={{
             margin: 'auto',
-            marginTop: '30px'
-          }} onClick={() => post_RT_sol(d1, d2, d3, d4, d5, clave, message)}>
+            marginTop: '30px',
+            color: 'rgba(255, 255, 255, 0.87)'
+          }} onClick={() => post_RT_sol(active, d1, d2, d3, d4, d5, clave, message)}>
             APLICAR
           </button>
         </div>
