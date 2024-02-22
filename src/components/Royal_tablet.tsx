@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Rt_pestillo from './Rt_pestillo';
 import { useEffectOnce } from 'react-use';
 import toast, { Toaster } from 'react-hot-toast';
-import { FormControlLabel, Switch } from '@mui/material';
+import { Switch } from '@mui/material';
 
 const Royal_tablet = ({ table_id }: { table_id: string }) => {
     type comb = {
@@ -267,7 +267,6 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
             marginBottom: '20px',
             marginLeft: 'auto',
             marginRight: 'auto',
-            //paddingTop: '-10px',
             paddingBottom: '10px',
             backgroundColor: '#343434',
             borderRadius: '20px'
