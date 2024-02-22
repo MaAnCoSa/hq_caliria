@@ -99,7 +99,7 @@ function App() {
               height: '20px',
               marginTop: '10px',
               padding: 'none'
-            }} type="text" value={tablePassword} onChange={(event) => setTablePassword(event.target.value)} />
+            }} type="password" value={tablePassword} onChange={(event) => setTablePassword(event.target.value)} />
           </div>
           <button
             className='close-modal'
