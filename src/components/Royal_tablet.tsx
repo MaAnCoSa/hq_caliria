@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Rt_pestillo from './Rt_pestillo';
 import { useEffectOnce } from 'react-use';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 const Royal_tablet = ({ table_id }: { table_id: string }) => {
@@ -76,6 +77,7 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
         clave: any,
         message: any
     ) => {
+      try {
         await fetch('https://backcaliria.vercel.app/rtsol',
         {
             method: 'POST',
@@ -95,8 +97,17 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
             })
         }
         )
+        toast.success(`Nueva Combinacion - ${selectedComb}: ${d1}${d2}${d3}${d4}${d5}`)
+
         setSelected(false)
         get_RT_sol()
+      } catch {
+        toast.error(`Algo salio mal...`)
+
+        setSelected(false)
+        get_RT_sol()
+      }
+        
     }
 
     const selectComb = (combName: string) => {
@@ -293,7 +304,15 @@ const Royal_tablet = ({ table_id }: { table_id: string }) => {
       </div>
       )}
       
-
+      <Toaster 
+        toastOptions={{
+          duration: 5000,
+          style: {
+            background: '#006400',
+            color: '#fff'
+          }
+        }}
+      />
     </>
     )
 }

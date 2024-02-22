@@ -34,8 +34,13 @@ function App() {
 }
 
   return (
-    <>
-      <h1>HQ Caliria</h1>
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }}>
+      <h1>HQ Caliria - {tableName}</h1>
       
       {!loginModal && <Royal_tablet table_id={tableId}/> }
 
@@ -102,7 +107,7 @@ function App() {
         
       </div>
       )}
-    </>
+    </div>
   )
 }
 
